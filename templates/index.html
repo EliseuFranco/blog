@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finanças Jovem</title>
+
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/index.css')}}"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <header>
+      <div class="nav-container">
+        <h2 class="logo">
+          <a href="{{url_for('index.index')}}">Finanças Jovem</a>
+        </h2>
+        <nav class="nav">
+          <div class="nav-links">
+            <a href="#">Sobre</a>
+            <a href="#">Posts</a>
+            {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('user.login') }}">Iniciar sessão</a>
+            <a href="{{ url_for('user.register') }}" class="regist"
+              >Cadastrar</a
+            >
+            {% else %}
+            <a href="{{url_for('user.dashboard')}}">Dashboard</a>
+            {% endif %}
+          </div>
+          <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </nav>
+      </div>
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="">Sobre</a>
+        <a href="{{url_for('user.login')}}">Iniciar sessão</a>
+        <a href="{{url_for('user.register')}}" class="regist">Cadastrar</a>
+        <a href="#">Posts</a>
+      </div>
+    </header>
+
+    {% block content %}
+    <section class="hero">
+      <div class="hero-section">
+        <h2>Comece a dominar seu dinheiro hoje!</h2>
+        <!-- <img
+          src="{{url_for('static', filename='images/young.png')}}"
+          alt="Ilustração jovem"
+          class="hero-image"
+        /> -->
+      </div>
+
+      <!-- <p>
+        Dicas práticas, conteúdos simples e objetivos para te ajudar a dar os
+        primeiros passos.
+      </p> -->
+    </section>
+
+    <main class="main-content">
+      <aside class="sidebar">
+        <h3>Categorias</h3>
+        <ul>
+          <li><a href="#">Orçamento</a></li>
+          <li><a href="#">Investimentos</a></li>
+          <li><a href="#">Dicas Rápidas</a></li>
+          <li><a href="#">Educação Financeira</a></li>
+        </ul>
+      </aside>
+
+      <section class="posts">
+        {% for post in posts %}
+        <article class="post-card">
+          <h4
+            style="
+              text-align: center;
+              color: #2ecc71;
+              font-size: 18px;
+              font-weight: bold;
+            "
+          >
+            {{post.title}}
+          </h4>
+          {% if post.photo %}
+          <div>
+            <img
+              src="{{url_for('static', filename='images/' ~ post.photo)}}"
+              alt="post image"
+              width="200px"
+              style="margin: auto"
+            />
+          </div>
+          {% endif %}
+          <span
+            >Publicado em: {{post.published_date.strftime("%d/%m/%Y")}}</span
+          >
+          <br />
+          <br />
+          <span>Por: <em>{{post.author.name}}</em></span>
+          <p>{{post.content | safe |truncate(100, False, '...')}}</p>
+
+          <a href="#">Ler mais</a>
+        </article>
+        {% endfor %}
+      </section>
+    </main>
+    {% endblock %}
+
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2025 Finanças Jovem. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>

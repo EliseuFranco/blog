@@ -1,0 +1,289 @@
+:root {
+  --bg: #f4f4f4;
+  --primary: #161b22;
+  --white: #fff;
+  --gray: #6b7280;
+  --card-bg: #ffffff;
+  --sidebar-width: 250px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: var(--primary);
+  width: 100%;
+}
+.alert {
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  color: #161b22;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+.alert-content {
+  max-width: 400px;
+  padding: 10px;
+  border-radius: 5px;
+}
+.danger {
+  background-color: #f04142;
+  color: #fff;
+}
+.success {
+  background-color: #2ecc71;
+}
+.dashboard {
+  display: flex;
+  flex-direction: column;
+
+  position: sticky;
+}
+.sidebar-menu {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  background-color: #111;
+  color: #2ecc71;
+  overflow-x: hidden;
+  padding-top: 20px;
+  transition: 0.4s;
+
+  display: flex;
+  justify-content: center;
+}
+.sidebar-menu nav {
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
+  padding: 20px;
+  text-align: center;
+}
+.sub-menu {
+  cursor: pointer;
+  width: 50px;
+  padding: 10px;
+  display: none;
+}
+
+.sub-menu-icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sub-icon {
+  width: 35px;
+}
+#logout {
+  width: 32px;
+  margin-left: 4px;
+}
+.sub-menu-icon:hover {
+  opacity: 0.9;
+}
+.header-content {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+.header-info {
+  display: flex;
+  flex-direction: column;
+}
+.header-card {
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.profile-pic {
+  background-color: #6b7280;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  padding: 30px;
+}
+.user-actions {
+  margin-left: 32px;
+  margin-bottom: 30px;
+
+  display: flex;
+  gap: 10px;
+}
+
+.close {
+  cursor: pointer;
+  font-size: 36px;
+  display: none;
+}
+/* Post styling */
+.posts {
+  display: flex;
+  flex-direction: column;
+  margin-left: 200px;
+  padding: 10px;
+}
+.posts h2 {
+  margin-left: 30px;
+  font-weight: 500;
+  color: #2ecc71;
+  font-size: 20px;
+}
+
+.post-content {
+  margin-top: -15px;
+  display: flex;
+  gap: 20px;
+  flex-flow: wrap;
+}
+.post-card {
+  flex: auto;
+  width: 400px;
+}
+.post-card h3 {
+  font-weight: 400;
+  color: #2ecc71;
+}
+/* New post styling */
+.new-post {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  background-color: #11111199;
+  z-index: 30;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.active {
+  opacity: 1;
+  visibility: visible;
+}
+.new-post-content {
+  background-color: #fff;
+  color: #fff;
+  padding: 15px;
+  display: flex;
+  max-width: 500px;
+  flex-direction: column;
+  gap: 20px;
+
+  position: relative;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+#title {
+  background-color: #111;
+  color: #fff;
+  padding-left: 10px;
+  padding: 10px;
+}
+
+#submit {
+  cursor: pointer;
+  background-color: #161b22;
+  padding: 10px;
+}
+#submit:hover {
+  opacity: 0.9;
+}
+.close-post {
+  color: #111;
+  text-align: right;
+  font-size: 26px;
+  cursor: pointer;
+}
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 15px;
+}
+.action {
+  border: 1px solid #fff;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+.action-icon {
+  width: 30px;
+}
+
+.delete {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  background-color: #11111199;
+  z-index: 30;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.delete.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.delete_post {
+  background-color: #161b22;
+  border-radius: 5px;
+  box-shadow: 0px 0px 8px #ffffff13;
+  padding: 30px;
+  display: flex;
+  flex-flow: column;
+}
+
+.delete-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.btn-confirm {
+  background-color: #f04142;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    margin-left: 0;
+  }
+  .posts {
+    margin-left: 0;
+  }
+  .post-content {
+    justify-content: center;
+    gap: 10px;
+  }
+  .post-card {
+    width: 90%;
+  }
+  .sub-menu {
+    display: block;
+    color: #f4f4f4;
+    margin-left: 20px;
+  }
+}

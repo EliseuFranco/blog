@@ -1,0 +1,181 @@
+{% extends 'index.html' %} {% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/dashboard.css')}}">
+{% endblock %} {% block content %}
+<main>
+
+  <div class="alert">
+    {% with messages = get_flashed_messages(with_categories = True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+      <div class="alert-content {{category}}">
+        {{message}}
+      </div>
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+  
+  </div>
+
+  <div class="dashboard">
+    <div class="sub"><img class="sub-menu" src="{{url_for('static', filename='images/submenu.svg')}}" alt=""></div>
+    <aside class="sidebar-menu">
+      <nav class="dashboard-menu">
+        <div class="sidebar-header">
+          <span class="close">&times;</span>
+        </div>
+        <a href="#" class="sub-menu-icon"><img class="sub-icon" src="{{url_for('static', filename='images/book.svg')}}" alt="">Posts</a>
+        <button href="#" class="sub-menu-icon" id="write"><img class="sub-icon" src="{{url_for('static', filename='images/write.svg')}}" alt="">Escrever</button>
+      </nav>
+    </aside>
+      <section class="content">
+        <div class="header-content">
+          <div class="header-info">
+            <div class="header-card">
+              <div class="profile-pic">
+                <img src="{{url_for('static', filename='images/user.svg')}}" alt="">
+              </div>
+              <div class="info">
+                <h3 style="color: #2ecc71; font-weight: 500;">Informações do perfil</h3>
+                <p>
+                  Nome: {{current_user.name}}
+                 </p>
+                 <p>Email: {{current_user.email}}</p>
+              </div>
+            </div>
+            <div class="user-actions">
+
+              <a href="{{url_for('user.logout')}}" class="sub-menu-icon"><img class="sub-icon" id="logout" src="{{url_for('static', filename='images/logout.svg')}}" alt="">Sair</a>
+              <a href="{{url_for('user.logout')}}" class="sub-menu-icon"><img class="sub-icon" id="logout" src="{{url_for('static', filename='images/write.svg')}}" alt="">Editar</a>
+              <a href="{{url_for('user.logout')}}" class="sub-menu-icon"><img class="sub-icon" id="logout" src="{{url_for('static', filename='images/delete.svg')}}" alt="">Apagar</a>
+            
+            </div>
+          </div>  
+          </div>
+      
+      </section>
+      <section class="posts">
+        <h2>Artigos publicados</h2>
+
+        <div class="post-content">
+          {% if posts %}
+            {% for post in posts %}
+            <div class="post-card">
+              <img src="" alt="">
+              <h3>{{post.title}}</h3>
+              <p>
+                {{post.content | safe | truncate(100, False, '...')}}
+              </p>
+              <span>Publicado em: {{post.published_date}}</span>
+              <div class="actions">
+                <a href="#" class="action"> <img class="action-icon" src="{{url_for('static', filename='images/edit2.svg')}}" alt="">Editar</a>
+
+                <button class="action btn_delete" id="{{post.id}}"> <img class="action-icon" src="{{url_for('static', filename='images/delete.svg')}}" alt="">Eliminar</button>
+              </div>
+            </div>
+            {% endfor %}
+          {% else %}
+            <p style="justify-content: center;">Sem posts publicados </p>
+          {% endif %}
+          
+      </section>
+    </div>
+    <section class="new-post">
+      <div class="new-post-content">
+        <span class="close-post">&times;</span>
+        <h2>Criar Novo Post</h2>
+        <form action="" method="post" enctype="multipart/form-data">
+           {{form.hidden_tag()}}
+           {{form.title}}
+           {{form.content|safe}}
+           {{form.image}}
+           {{form.submit}}
+          </form>
+      </div>
+  </section>
+
+  <section class="delete">
+    <div class="delete_post">
+      
+      <form id="delete-form" method="post">
+        {{form.hidden_tag()}}
+        <p>Certeza que deseja eliminar o post?</p>
+        <div class="delete-modal-buttons">
+          <button type="submit" class="btn-confirm">Confirmar</button>
+          <input type="reset" id="modal_delete" value="Cancelar">       
+        </div>
+      </form>
+    </div>
+  </section>
+  </div>
+  {{ ckeditor.load() }} <!--Carrgar o ckEditor-->
+  {{ ckeditor.config(name='content') }} <!--O elemento do formulário que receberá o-->
+</main>
+<script>
+  let close_button = document.querySelector(".close");
+  let dashboard_menu = document.querySelector(".sidebar-menu");
+  let open_button = document.querySelector(".sub-menu");
+  let main_content = document.querySelector(".content")
+
+  let btn_delete = document.querySelectorAll(".btn_delete")
+  let modal_delete = document.getElementById("modal_delete")
+  let id;
+
+
+  function closeSidebar() {
+    if (window.innerWidth <= 768) {
+      // open_button.style.display = "block";
+      dashboard_menu.style.width = "0";
+      main_content.style.marginLeft = '0'
+      close_button.style.display = 'block'
+    } else {
+      dashboard_menu.style.width = "200px";
+      main_content.style.marginLeft = '200px'
+    }
+  }
+  function openSidebar() {
+    dashboard_menu.style.display = "flex";
+    dashboard_menu.style.width = "100%";
+  }
+  // Ativa quando a janela for redimensionada
+  window.addEventListener("resize", closeSidebar);
+  window.addEventListener("load", closeSidebar);
+
+  // Botões
+  close_button.addEventListener("click", closeSidebar);
+  open_button.addEventListener("click", openSidebar);
+  
+  document.querySelector(".close-post").addEventListener("click", () => {
+  document.querySelector(".new-post").classList.remove("active");
+});
+
+document.getElementById("write").addEventListener("click", () => {
+  document.querySelector(".new-post").classList.add("active");
+});
+
+let delete_post = document.querySelector(".delete")
+// Delete post
+btn_delete.forEach((btn) => {
+  btn.addEventListener("click", function () {
+    id = btn.getAttribute("id")
+    delete_post.classList.add("active");
+    document.getElementById("delete-form").action = `${"delete_post"}/${id}`
+  });
+});
+
+modal_delete.addEventListener("click", () => {
+  console.log("Fechou modal");
+  delete_post.classList.remove("active");
+});
+
+let alertInfo = document.querySelector(".alert-content")
+
+setInterval(()=>{
+  if(alertInfo.innerText){
+    document.querySelector(".alert").style.display = "none";
+  }
+}, 3000)
+
+
+</script>
+
+{% endblock %}

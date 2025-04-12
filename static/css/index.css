@@ -1,0 +1,220 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #161b22;
+  color: #e6edf3;
+}
+
+header {
+  background-color: #161b22;
+  padding: 20px;
+  color: #fff;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.logo {
+  font-weight: 700;
+}
+.logo a {
+  text-decoration: none;
+  color: #fff;
+}
+.nav h2 {
+  font-size: 1.8rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.nav-links a.regist {
+  color: #38a169;
+}
+
+/* Hamburger menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background-color: #1a1f2a;
+  padding: 10px 20px;
+  gap: 10px;
+}
+
+.mobile-menu a {
+  color: #fff;
+}
+
+.mobile-menu a.regist {
+  color: #1eba67;
+}
+
+.hero {
+  background-image: url(/static/images/coin.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+  height: 300px;
+  width: 100%;
+  color: #1eba67;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #fff;
+}
+/* .hero-image {
+  max-width: 100%;
+  height: 300px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+} */
+
+.main-content {
+  display: flex;
+  gap: 30px;
+  padding: 40px 20px;
+}
+
+.sidebar {
+  background-color: #1a202c;
+  padding: 30px;
+  border-radius: 10px;
+  flex: 1;
+  height: 300px;
+}
+
+.sidebar h3 {
+  margin-bottom: 15px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin: 10px 0;
+}
+
+.sidebar ul li a {
+  color: #1eba67;
+}
+a {
+  text-decoration: none;
+}
+.posts {
+  flex: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.post-card {
+  background-color: #1a202c;
+  padding: 20px;
+  border-radius: 10px;
+  width: calc(50% - 10px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+.post-card:hover {
+  box-shadow: 0 0 8px #ffffff4d;
+  transition: 0.5s;
+}
+
+.post-card h4 {
+  margin-bottom: 10px;
+}
+.post-card p {
+  max-width: 300px;
+}
+
+.post-card a {
+  color: #2ecc71;
+  font-weight: 600;
+}
+.footer {
+  background: #1a202c;
+  color: #ccc;
+  text-align: center;
+  padding: 20px 0;
+}
+.form-control {
+  color: #161b22;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    margin-top: 20px;
+  }
+  .nav-links a {
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .mobile-menu.active {
+    display: flex;
+  }
+
+  .main-content {
+    flex-direction: column;
+  }
+
+  .posts {
+    flex-direction: column;
+  }
+
+  .post-card {
+    width: 100%;
+  }
+  .hero-image {
+    height: auto;
+  }
+  .hero h2 {
+    font-size: 1.6rem;
+  }
+}

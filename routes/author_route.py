@@ -131,34 +131,38 @@ def logout():
 @login_required
 def dashboard():
     from extensions import UPLOAD_FOLDER
+    
     form = PostForm()
     user_posts = Post.query.filter_by(author_id=current_user.id).all()
+
+    filename = None  # Definir o filename antes de usá-lo
 
     if form.validate_on_submit():
 
         if form.image.data and not check_file(form.image.data.filename):
-            flash("O ficheiro de imagem não é válido","danger")
+            flash("O ficheiro de imagem não é válido", "danger")
             return redirect(url_for("user.dashboard"))
         
         file = form.image.data
+
         if file:
             filename = secure_filename(file.filename)
+            if not os.path.exists(UPLOAD_FOLDER):
+                os.makedirs(UPLOAD_FOLDER)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
-        # print(request.files["image"])
        
-        new_post = Post(title = form.title.data,
-                        content = cleanify(form.content.data),
-                        author_id = current_user.id,
-                        photo = filename)
-        #Grab de name pic
-        
+        new_post = Post(
+            title=form.title.data,
+            content=cleanify(form.content.data),
+            author_id=current_user.id,
+            photo=filename
+        )
         db.session.add(new_post)
         db.session.commit()
-        flash("Post created succssesfully", "success")
+        flash("Post created successfully", "success")  # Corrigido erro de digitação
         return redirect(url_for("user.dashboard"))
 
-    return render_template("dashboard.html", form = form, posts = user_posts)
-
+    return render_template("dashboard.html", form=form, posts=user_posts)
 @author_bp.route("delete_post/<int:id>", methods=['POST'])
 def delete_post(id):
     post_to_delete = Post.query.get_or_404(id)

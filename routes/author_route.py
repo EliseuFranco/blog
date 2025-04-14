@@ -124,6 +124,8 @@ def logout():
     flash("You where logged out")
     return redirect(url_for("user.login"))
 
+
+#Rota do dashboard
 @author_bp.route("/dashboard", methods=["GET","POST"])
 @login_required
 def dashboard():
@@ -135,32 +137,36 @@ def dashboard():
     filename = None  # Definir o filename antes de usá-lo
 
     if form.validate_on_submit():
+        try:
 
-        if form.image.data and not check_file(form.image.data.filename):
-            flash("O ficheiro de imagem não é válido", "danger")
-            return redirect(url_for("user.dashboard"))
+            if form.image.data and not check_file(form.image.data.filename):
+                flash("O ficheiro de imagem não é válido", "danger")
+                return redirect(url_for("user.dashboard"))
+            file = form.image.data
+            if file:
+                filename = secure_filename(file.filename)
+                if not os.path.exists(UPLOAD_FOLDER):
+                    os.makedirs(UPLOAD_FOLDER)
+                file.save(os.path.join(UPLOAD_FOLDER, filename))
         
-        file = form.image.data
-
-        if file:
-            filename = secure_filename(file.filename)
-            if not os.path.exists(UPLOAD_FOLDER):
-                os.makedirs(UPLOAD_FOLDER)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
-       
-        new_post = Post(
-            title=form.title.data,
-            content=cleanify(form.content.data),
-            author_id=current_user.id,
-            photo=filename
-        )
-        db.session.add(new_post)
-        db.session.commit()
-        flash("Post created successfully", "success")  # Corrigido erro de digitação
-        return redirect(url_for("user.dashboard"))
-
+            new_post = Post(
+                title=form.title.data,
+                content=cleanify(form.content.data),
+                author_id=current_user.id,
+                photo=filename
+            )
+            db.session.add(new_post)
+            db.session.commit()
+            flash("Post created successfully", "success")  # Corrigido erro de digitação
+            return redirect(url_for("user.dashboard"))
+        except Exception as e:
+            db.session.rollback()
+            flash("Erro ao tentar iniciar sessão", "danger")
 
     return render_template("dashboard.html", form=form, posts=user_posts)
+
+
+#Rota para deletar um post
 @author_bp.route("delete_post/<int:id>", methods=['POST'])
 def delete_post(id):
     post_to_delete = Post.query.get_or_404(id)
@@ -170,6 +176,7 @@ def delete_post(id):
         flash("Post deletected, successfully", "success")
         return redirect(url_for("user.dashboard"))
     except Exception:
+        db.session.rollback()
         flash("Houve um erro ao eliminar o post", "warning")
         return redirect(url_for("user.dashboard"))
 
@@ -177,7 +184,8 @@ def delete_post(id):
 def edit_post(id):
     return redirect(url_for("user.dashboard"))
   
-    
+
+#Rota para editar um post
 @author_bp.route("/edit_user/<int:id>", methods=["POST"])
 def edit_user(id):
     user_to_update = Author.query.get_or_404(id)
@@ -191,6 +199,11 @@ def edit_user(id):
         flash("Não foi possível atualizar as informações", "danger")
         return redirect(url_for("user.dashboard"))
     
-    
+
+#Rota para ler os posts
+@author_bp.route("/post_detail/<int:id>")
+def post_detail(id):
+    user_post_detail = Post.query.filter_by(id = id).first_or_404()
+    return render_template("post_detail.html", post = user_post_detail)
     
  

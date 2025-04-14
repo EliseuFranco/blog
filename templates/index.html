@@ -88,7 +88,7 @@
           <span>Por: <em>{{post.author.name}}</em></span>
           <p>{{post.content | safe |truncate(100, False, '...')}}</p>
 
-          <a href="#">Ler mais</a>
+          <a href="{{url_for('user.post_detail', id = post.id)}}">Ler mais</a>
         </article>
         {% endfor %}
       </section>

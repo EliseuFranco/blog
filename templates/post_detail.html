@@ -59,14 +59,19 @@
 </style>
 {% endblock %} {% block content %}
 <main>
-  <div class="container-content">
-    <h1 style="color: #fff">{{post.title}}</h1>
-    <p>Por: {{post.author.name}}</p>
-    <span>Publicado em:{{post.published_date.strftime("%d/%m/%Y")}}</span>
-  </div>
-  <div class="post-content">
+  <section class="container-content">
+    <article>
+      <h1 style="color: #fff">{{post.title}}</h1>
+      <p>Por: {{post.author.name}}</p>
+      <span>Publicado em:{{post.published_date.strftime("%d/%m/%Y")}}</span>
+    </article>
+  </section>
+
+  <section class="post-content">
     <aside class="anunce-container"></aside>
-    <div class="user-post">{{post.content.strip()|safe}}</div>
-  </div>
+    <article class="user-post">
+      <p>{{post.content|safe}}</p>
+    </article>
+  </section>
 </main>
 {% endblock %}

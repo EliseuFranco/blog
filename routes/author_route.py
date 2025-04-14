@@ -18,9 +18,7 @@ from utils import check_file
 
 author_bp = Blueprint("user", __name__)
 
-
 #REGISTO DE USUÁRIO COM GOOGLE
-
 @author_bp.route("/OauthRegister")
 def OauthRegister():
     return OauthConfig.google.authorize_redirect(url_for("user.google_callback", _external=True))
@@ -30,13 +28,11 @@ def OauthRegister():
 def OauthLogin():
     return OauthConfig.google.authorize_redirect(url_for("user.google_callback", _external=True))
 
-
 #Capturar o id do user na sessão
 
 @login_manager.user_loader
 def load_user(user_id):
     return Author.query.get(int(user_id))
-
 
 #GOOGLE CALLBACK
 @author_bp.route("/google_callback")
@@ -116,8 +112,9 @@ def login():
         
         if author and Author.check_password(author.password_hash, form.password.data):
             login_user(author)
+            session['user'] = current_user.email
             return redirect(url_for("user.dashboard"))
-        flash("Utilizador inexistente, tente novamente ou faça cadastro", "danger")
+        flash("Utilizador inexistente, tente novamente ou crie conta", "danger")
     return render_template("login.html", form = form)
 
 #Rota de logout
@@ -162,6 +159,7 @@ def dashboard():
         flash("Post created successfully", "success")  # Corrigido erro de digitação
         return redirect(url_for("user.dashboard"))
 
+
     return render_template("dashboard.html", form=form, posts=user_posts)
 @author_bp.route("delete_post/<int:id>", methods=['POST'])
 def delete_post(id):
@@ -175,3 +173,24 @@ def delete_post(id):
         flash("Houve um erro ao eliminar o post", "warning")
         return redirect(url_for("user.dashboard"))
 
+@author_bp.route("/edit_post/<int:id>", methods=["POST"])
+def edit_post(id):
+    return redirect(url_for("user.dashboard"))
+  
+    
+@author_bp.route("/edit_user/<int:id>", methods=["POST"])
+def edit_user(id):
+    user_to_update = Author.query.get_or_404(id)
+    try:
+        if request.form:
+            user_to_update.name = request.form.get('name')
+            user_to_update.email = request.form.get('email')
+            db.session.commit()
+            return redirect(url_for("user.dashboard"))
+    except Exception as e:
+        flash("Não foi possível atualizar as informações", "danger")
+        return redirect(url_for("user.dashboard"))
+    
+    
+    
+ 

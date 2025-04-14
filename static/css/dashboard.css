@@ -113,7 +113,6 @@ body {
 .user-actions {
   margin-left: 32px;
   margin-bottom: 30px;
-
   display: flex;
   gap: 10px;
 }
@@ -158,7 +157,7 @@ body {
   width: 100%;
   top: 0;
   background-color: #11111199;
-  z-index: 30;
+  z-index: 1;
 
   opacity: 0;
   visibility: hidden;
@@ -169,6 +168,24 @@ body {
   align-items: center;
   flex-direction: column;
 }
+.user-edit-form {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  background-color: #11111199;
+  z-index: 1;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .active {
   opacity: 1;
   visibility: visible;
@@ -181,8 +198,34 @@ body {
   max-width: 500px;
   flex-direction: column;
   gap: 20px;
-
   position: relative;
+}
+.edit-user-content {
+  padding: 15px;
+  display: flex;
+  max-width: 500px;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  background-color: #fff;
+  color: #111;
+  padding: 50px;
+  width: 80%;
+  border-radius: 5px;
+}
+.edit-user-content input {
+  background-color: #161b22;
+  color: #fff;
+  padding: 5px;
+  outline: none;
+  border-radius: 5px;
+}
+.edit-user-content input[type="text"]:focus {
+  background-color: #161b22;
+}
+.edit-user-content input[type="submit"] {
+  color: #fff;
+  border-radius: 5px;
 }
 form {
   display: flex;
@@ -231,7 +274,7 @@ form {
   width: 100%;
   top: 0;
   background-color: #11111199;
-  z-index: 30;
+  z-index: 1;
 
   opacity: 0;
   visibility: hidden;
@@ -266,8 +309,45 @@ form {
   border-radius: 5px;
   padding: 10px;
 }
+.edit {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  background-color: #11111199;
+  z-index: 1;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.edit.active {
+  opacity: 1;
+  visibility: visible;
+}
+.edit_post {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 8px #ffffff13;
+  padding: 30px;
+  display: flex;
+  flex-flow: column;
+}
+.btn-confirm {
+  background-color: #f04142;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+}
 
 @media screen and (max-width: 768px) {
+  .sidebar-menu {
+    width: 0;
+  }
   .content {
     margin-left: 0;
   }

@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Finanças Jovem</title>
-
     <link
       rel="stylesheet"
       href="{{url_for('static', filename='css/index.css')}}"
@@ -14,34 +13,24 @@
   </head>
   <body>
     <header>
-      <div class="nav-container">
+      <nav class="nav-container">
         <h2 class="logo">
           <a href="{{url_for('index.index')}}">Finanças Jovem</a>
         </h2>
-        <nav class="nav">
-          <div class="nav-links">
-            <a href="#">Sobre</a>
-            <a href="#">Posts</a>
-            {% if not current_user.is_authenticated %}
-            <a href="{{ url_for('user.login') }}">Iniciar sessão</a>
-            <a href="{{ url_for('user.register') }}" class="regist"
-              >Cadastrar</a
-            >
-            {% else %}
-            <a href="{{url_for('user.dashboard')}}">Dashboard</a>
-            {% endif %}
-          </div>
-          <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </nav>
-      </div>
+        <div class="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </nav>
       <div class="mobile-menu" id="mobileMenu">
         <a href="">Sobre</a>
+        {% if not current_user.is_authenticated %}
         <a href="{{url_for('user.login')}}">Iniciar sessão</a>
-        <a href="{{url_for('user.register')}}" class="regist">Cadastrar</a>
+        <a href="{{url_for('user.register')}}" class="regist">Criar conta</a>
+        {% else %}
+        <a href="{{url_for('user.dashboard')}}" class="regist">Dashboard</a>
+        {% endif %}
         <a href="#">Posts</a>
       </div>
     </header>
@@ -50,13 +39,7 @@
     <section class="hero">
       <div class="hero-section">
         <h2>Comece a dominar seu dinheiro hoje!</h2>
-        <!-- <img
-          src="{{url_for('static', filename='images/young.png')}}"
-          alt="Ilustração jovem"
-          class="hero-image"
-        /> -->
       </div>
-
       <!-- <p>
         Dicas práticas, conteúdos simples e objetivos para te ajudar a dar os
         primeiros passos.

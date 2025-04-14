@@ -17,14 +17,14 @@
   </div>
 
   <div class="dashboard">
-    <div class="sub"><img class="sub-menu" src="{{url_for('static', filename='images/submenu.svg')}}" alt=""></div>
+    <div class="sub"><img class="sub-menu" src="{{url_for('static', filename='images/submenu.svg')}}" alt="sebmenu icon" loading="lazy"></div>
     <aside class="sidebar-menu">
       <nav class="dashboard-menu">
         <div class="sidebar-header">
           <span class="close">&times;</span>
         </div>
-        <a href="#" class="sub-menu-icon"><img class="sub-icon" src="{{url_for('static', filename='images/book.svg')}}" alt="">Posts</a>
-        <button href="#" class="sub-menu-icon" id="write"><img class="sub-icon" src="{{url_for('static', filename='images/write.svg')}}" alt="">Escrever</button>
+        <a href="#" class="sub-menu-icon" ><img class="sub-icon" src="{{url_for('static', filename='images/book.svg')}}" alt="post icon" loading="lazy">Posts</a>
+        <button href="#" class="sub-menu-icon" id="write"><img class="sub-icon" src="{{url_for('static', filename='images/write.svg')}}" alt="edit icon" loading="lazy">Escrever</button>
       </nav>
     </aside>
     <!-- User side -->
@@ -33,7 +33,7 @@
           <div class="header-info">
             <div class="header-card">
               <div class="profile-pic">
-                <img src="{{url_for('static', filename='images/user.svg')}}" alt="">
+                <img src="{{url_for('static', filename='images/user.svg')}}" alt="user icon" loading="lazy">
               </div>
               <div class="info">
                 <h3 style="color: #2ecc71; font-weight: 500;">Informações do perfil</h3>
@@ -45,9 +45,9 @@
             </div>
             <div class="user-actions">
 
-              <a href="{{url_for('user.logout')}}" class="sub-menu-icon"><img class="sub-icon" id="logout" src="{{url_for('static', filename='images/logout.svg')}}" alt="">Sair</a>
-              <button class="sub-menu-icon edit-user"><img class="sub-icon" id="logout" src="{{url_for('static', filename='images/write.svg')}}" alt="">Editar</button>
-              <a href="#" class="sub-menu-icon"><img class="sub-icon" id="logout" src="{{url_for('static', filename='images/delete.svg')}}" alt="">Eliminar conta</a>
+              <a href="{{url_for('user.logout')}}" class="sub-menu-icon"><img class="sub-icon" id="logout" src="{{url_for('static', filename='images/logout.svg')}}" alt="logout icon" loading="lazy">Sair</a>
+              <button class="sub-menu-icon edit-user"><img class="sub-icon" id="logout" src="{{url_for('static', filename='images/write.svg')}}" alt="edit icon" loading="lazy">Editar</button>
+              <a href="#" class="sub-menu-icon"><img class="sub-icon" id="logout" src="{{url_for('static', filename='images/delete.svg')}}" alt="delete icon" loading="lazy">Eliminar conta</a>
             </div>
           </div>  
           </div>
@@ -86,10 +86,10 @@
         id="{{ post.id }}"
         data-title="{{ post.title }}"
         data-content="{{ post.content|e }}"> 
-        <img class="action-icon" src="{{ url_for('static', filename='images/edit2.svg') }}" alt="">Editar
+        <img class="action-icon" src="{{ url_for('static', filename='images/edit2.svg') }}" alt="edit icon" loading="lazy">Editar
       </button>
 
-                <button class="action btn_delete" id="{{post.id}}"> <img class="action-icon" src="{{url_for('static', filename='images/delete.svg')}}" alt="">Eliminar</button>
+      <button class="action btn_delete" id="{{post.id}}"> <img class="action-icon" src="{{url_for('static', filename='images/delete.svg')}}" alt="delete icon" loading="lazy">Eliminar</button>
               </div>
             </div>
             {% endfor %}
